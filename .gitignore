@@ -1,0 +1,16 @@
+.next
+node_modules
+out
+dist
+.vercel
+.tools
+deploy-preview
+dream-decor-preview.zip
+preview-nordic.html
+site-directions.html
+public/images/stock-test.jpg
+public/images/stock/_contact-sheet.jpg
+public/images/stock/_failed*.json
+*.log
+.env
+.env.local
