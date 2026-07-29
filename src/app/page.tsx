@@ -1,7 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowRight, Check, Mail, MapPin, Sparkles } from "lucide-react";
+import {
+  ArrowRight,
+  Check,
+  Facebook,
+  Instagram,
+  Mail,
+  MapPin,
+  MessageCircle,
+  Phone,
+  Sparkles
+} from "lucide-react";
 import { InquiryForm } from "@/components/InquiryForm";
 import { siteContent } from "@/content/site";
 import { Language, translations } from "@/content/translations";
@@ -19,6 +29,7 @@ export default function Home() {
       <PortfolioPreview language={language} />
       <Process language={language} />
       <Inquiry language={language} />
+      <Footer language={language} />
     </main>
   );
 }
@@ -259,10 +270,63 @@ function Inquiry({ language }: { language: Language }) {
           <MapPin size={16} aria-hidden="true" />
           {contact.location}
         </span>
-        <span>{contact.email}</span>
-        <span>{contact.phone}</span>
+        <a href={`mailto:${contact.email}`}>
+          <Mail size={16} aria-hidden="true" />
+          {contact.email}
+        </a>
+        <a href={contact.phoneHref}>
+          <Phone size={16} aria-hidden="true" />
+          {contact.phone}
+        </a>
+        <a href={contact.whatsapp} target="_blank" rel="noreferrer">
+          <MessageCircle size={16} aria-hidden="true" />
+          WhatsApp
+        </a>
+        <a href={contact.instagram} target="_blank" rel="noreferrer">
+          <Instagram size={16} aria-hidden="true" />
+          {contact.instagramHandle}
+        </a>
+        <a href={contact.facebook} target="_blank" rel="noreferrer">
+          <Facebook size={16} aria-hidden="true" />
+          {contact.facebookLabel}
+        </a>
       </div>
+      <p className="response-time">{t.responseTime}</p>
     </section>
+  );
+}
+
+function Footer({ language }: { language: Language }) {
+  const t = translations[language];
+  const { contact, brand } = siteContent;
+
+  return (
+    <footer className="site-footer">
+      <div>
+        <img src={brand.logo} alt="" aria-hidden="true" />
+        <div>
+          <strong>{brand.name}</strong>
+          <span>{t.contactUs}</span>
+        </div>
+      </div>
+      <div className="footer-links" aria-label={t.followUs}>
+        <a href={`mailto:${contact.email}`} aria-label="Email">
+          <Mail size={18} />
+        </a>
+        <a href={contact.phoneHref} aria-label="Phone">
+          <Phone size={18} />
+        </a>
+        <a href={contact.whatsapp} target="_blank" rel="noreferrer" aria-label="WhatsApp">
+          <MessageCircle size={18} />
+        </a>
+        <a href={contact.instagram} target="_blank" rel="noreferrer" aria-label="Instagram">
+          <Instagram size={18} />
+        </a>
+        <a href={contact.facebook} target="_blank" rel="noreferrer" aria-label="Facebook">
+          <Facebook size={18} />
+        </a>
+      </div>
+    </footer>
   );
 }
 

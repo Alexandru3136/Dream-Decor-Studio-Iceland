@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dream Decor Studio Iceland - Business Card</title>
+  <style>
+    :root {
+      --navy: #071126;
+      --navy-2: #0e1b32;
+      --gold: #c89b4f;
+      --gold-soft: #ead9ad;
+      --ivory: #fffdf7;
+      --muted: #c9c0ad;
+      --line: rgba(200, 155, 79, .42);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 34px;
+      display: grid;
+      gap: 24px;
+      place-items: center;
+      color: var(--ivory);
+      background: #151515;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    .sheet {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+      align-items: start;
+    }
+
+    .card-wrap {
+      display: grid;
+      gap: 10px;
+    }
+
+    .label {
+      margin: 0;
+      color: #bdb6aa;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .card {
+      width: 3.5in;
+      height: 2in;
+      padding: .2in .24in;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      display: grid;
+      background:
+        radial-gradient(circle at 82% 18%, rgba(200, 155, 79, .22), transparent 34%),
+        linear-gradient(135deg, var(--navy), var(--navy-2));
+      box-shadow: 0 22px 70px rgba(0, 0, 0, .35);
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: .12in;
+      border: 1px solid rgba(234, 217, 173, .24);
+      border-radius: 6px;
+      pointer-events: none;
+    }
+
+    .front {
+      place-items: center;
+      text-align: center;
+    }
+
+    .mark {
+      width: 1.1in;
+      height: .64in;
+      border: 1px solid rgba(200, 155, 79, .42);
+      border-radius: 7px;
+      object-fit: cover;
+      box-shadow: 0 16px 34px rgba(0,0,0,.24);
+    }
+
+    .brand {
+      margin: .13in 0 0;
+      color: var(--gold-soft);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: .245in;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    .studio {
+      margin: .055in 0 0;
+      color: var(--muted);
+      font-size: .082in;
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .divider {
+      width: 1.22in;
+      height: 1px;
+      margin: .13in auto 0;
+      position: relative;
+      background: linear-gradient(90deg, transparent, var(--gold-soft), var(--gold), var(--gold-soft), transparent);
+    }
+
+    .divider::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: .055in;
+      height: .055in;
+      border: 1px solid var(--gold-soft);
+      background: var(--navy);
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+
+    .tagline {
+      margin: .13in 0 0;
+      color: var(--muted);
+      font-size: .075in;
+      line-height: 1.45;
+      text-transform: uppercase;
+    }
+
+    .back {
+      grid-template-columns: 1fr;
+      align-content: space-between;
+    }
+
+    .person {
+      position: relative;
+      z-index: 1;
+    }
+
+    .name {
+      margin: 0;
+      color: var(--gold-soft);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: .22in;
+      line-height: 1.05;
+    }
+
+    .role {
+      margin: .04in 0 0;
+      color: var(--muted);
+      font-size: .078in;
+      font-weight: 800;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+
+    .details {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: .055in;
+      color: var(--ivory);
+      font-size: .087in;
+      line-height: 1.25;
+    }
+
+    .details span {
+      display: block;
+    }
+
+    .details strong {
+      color: var(--gold-soft);
+      font-weight: 800;
+    }
+
+    .qr {
+      position: absolute;
+      right: .24in;
+      bottom: .2in;
+      width: .52in;
+      height: .52in;
+      padding: .04in;
+      border: 2px solid var(--gold-soft);
+      background: var(--gold-soft);
+      object-fit: contain;
+    }
+
+    .note {
+      max-width: 760px;
+      margin: 0;
+      color: #cfc8bd;
+      font-size: 14px;
+      line-height: 1.55;
+      text-align: center;
+    }
+
+    @media print {
+      body {
+        padding: 0;
+        background: #fff;
+      }
+
+      .label,
+      .note {
+        display: none;
+      }
+
+      .sheet {
+        padding: .35in;
+        gap: .25in;
+      }
+
+      .card {
+        box-shadow: none;
+        break-inside: avoid;
+      }
+    }
+
+    @media (max-width: 820px) {
+      .sheet {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="sheet">
+    <div class="card-wrap">
+      <p class="label">Front</p>
+      <section class="card front" aria-label="Business card front">
+        <div>
+          <img class="mark" src="public/images/dream-decor-mark.jpg" alt="Dream Decor monogram">
+          <h1 class="brand">Dream Decor</h1>
+          <p class="studio">Studio Iceland</p>
+          <div class="divider" aria-hidden="true"></div>
+          <p class="tagline">Event decor · Styling · Seasonal installations</p>
+        </div>
+      </section>
+    </div>
+
+    <div class="card-wrap">
+      <p class="label">Back</p>
+      <section class="card back" aria-label="Business card back">
+        <div class="person">
+          <h2 class="name">Dream Decor Studio</h2>
+          <p class="role">Event decoration in Iceland</p>
+        </div>
+        <div class="details">
+          <span><strong>Phone</strong> +354 766 6488</span>
+          <span><strong>Email</strong> dreamdecor.iceland@gmail.com</span>
+          <span><strong>Instagram</strong> @dream.decor.iceland</span>
+          <span><strong>Facebook</strong> Dream Decor</span>
+        </div>
+        <img class="qr" src="public/images/qr-instagram.png" alt="QR code to Dream Decor Instagram">
+      </section>
+    </div>
+  </div>
+  <p class="note">Previzualizare digitală. PDF-ul din output/pdf este pregătit la dimensiunea de 85 x 55 mm.</p>
+</body>
+</html>

@@ -16,7 +16,10 @@ export function InquiryForm({ language }: { language: Language }) {
     setStatus("sending");
 
     const formData = new FormData(event.currentTarget);
-    const payload = Object.fromEntries(formData.entries());
+    const payload = {
+      ...Object.fromEntries(formData.entries()),
+      language
+    };
 
     try {
       const response = await fetch("/api/inquiry", {
@@ -38,13 +41,21 @@ export function InquiryForm({ language }: { language: Language }) {
 
   return (
     <form className="inquiry-form" onSubmit={handleSubmit}>
+      <label className="honeypot" aria-hidden="true">
+        Company
+        <input type="text" name="company" tabIndex={-1} autoComplete="off" />
+      </label>
       <label>
         {t.name}
         <input type="text" name="name" placeholder={t.namePlaceholder} required />
       </label>
       <label>
-        Email
+        {t.email}
         <input type="email" name="email" placeholder="name@email.com" required />
+      </label>
+      <label>
+        {t.phone}
+        <input type="tel" name="phone" placeholder={t.phonePlaceholder} required />
       </label>
       <label>
         {t.eventType}
@@ -81,6 +92,17 @@ export function InquiryForm({ language }: { language: Language }) {
         <input type="text" name="budget" placeholder={t.budgetPlaceholder} />
       </label>
       <label>
+        {t.contactMethod}
+        <select name="contactMethod" defaultValue="" required>
+          <option value="" disabled>
+            {t.chooseContactMethod}
+          </option>
+          {t.contactMethods.map((option) => (
+            <option key={option}>{option}</option>
+          ))}
+        </select>
+      </label>
+      <label>
         {t.support}
         <select name="support" defaultValue="">
           <option value="" disabled>
@@ -105,6 +127,12 @@ export function InquiryForm({ language }: { language: Language }) {
       </button>
       {status === "sent" ? <p className="form-status full">{t.sent}</p> : null}
       {status === "error" ? <p className="form-status error full">{t.error}</p> : null}
+      {status === "error" ? (
+        <p className="form-fallback full">
+          <a href="tel:+3547666488">+354 766 6488</a>
+          <a href="mailto:dreamdecor.iceland@gmail.com">dreamdecor.iceland@gmail.com</a>
+        </p>
+      ) : null}
     </form>
   );
 }
