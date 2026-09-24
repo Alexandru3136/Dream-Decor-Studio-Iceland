@@ -6,6 +6,8 @@ export const translations = {
     navPortfolio: "Portfolio",
     navProcess: "Process",
     navInquiry: "Contact",
+    openMenu: "Open menu",
+    closeMenu: "Close menu",
     heroKicker: "Event decor across Iceland",
     heroTitle: "Dreamlike decor for every celebration.",
     heroLead:
@@ -14,6 +16,7 @@ export const translations = {
     viewPortfolio: "View portfolio",
     servicesEyebrow: "Services",
     servicesTitle: "A complete decor service for every kind of celebration.",
+    learnMore: "Learn more",
     aboutEyebrow: "About the studio",
     aboutTitle: "Decor with atmosphere, balance, and a sense of occasion.",
     aboutText:
@@ -35,6 +38,94 @@ export const translations = {
     responseTime: "We usually reply within one business day.",
     contactUs: "Contact Dream Decor",
     followUs: "Follow our latest work",
+    whatsappCta: "Chat on WhatsApp",
+    bookNoona: "Book a consultation",
+    beforeLabel: "Before",
+    afterLabel: "After",
+    testimonialsEyebrow: "Testimonials",
+    testimonialsTitle: "What clients say about working with us.",
+    // TODO(client): replace with real client reviews (and keep the aggregate rating in layout.tsx in sync).
+    testimonials: [
+      {
+        quote:
+          "Every detail felt considered and personal. Our wedding looked like the moodboard we dreamed of.",
+        name: "Anna & Jón",
+        event: "Wedding, Reykjavik"
+      },
+      {
+        quote:
+          "They transformed the venue in hours and handled everything on the day. Completely stress-free.",
+        name: "Kristín H.",
+        event: "Corporate launch"
+      },
+      {
+        quote:
+          "Warm, professional, and full of ideas. Our baby shower was beautiful and everyone noticed.",
+        name: "Elísabet G.",
+        event: "Baby shower"
+      }
+    ],
+    pricingEyebrow: "Packages",
+    pricingTitle: "A package for every kind of celebration.",
+    pricingNote:
+      "Every celebration is quoted individually. Share your details and we'll prepare a tailored proposal.",
+    // TODO(client): confirm package names and what each includes. Prices are quoted per event.
+    pricing: [
+      {
+        name: "Essential",
+        price: "Price on request",
+        description: "Styling for intimate gatherings and focused setups.",
+        features: ["Concept direction", "Table & focal styling", "On-site setup"]
+      },
+      {
+        name: "Signature",
+        price: "Price on request",
+        description: "Our most popular full-service décor for larger celebrations.",
+        features: ["Full concept & moodboard", "Complete venue styling", "Setup & takedown"],
+        featured: true
+      },
+      {
+        name: "Bespoke",
+        price: "Price on request",
+        description: "Fully tailored design for weddings and premium events.",
+        features: ["Bespoke design", "Florals & installations", "Coordination on the day"]
+      }
+    ],
+    faqEyebrow: "FAQ",
+    faqTitle: "Good to know before you book.",
+    // TODO(client): adjust answers to match the studio's real policies.
+    faq: [
+      {
+        question: "Which areas in Iceland do you cover?",
+        answer:
+          "We are based in the capital area and travel across Iceland. Travel outside the Reykjavik area may add a small fee."
+      },
+      {
+        question: "How far in advance should I book?",
+        answer:
+          "For weddings and large events we recommend 2–3 months ahead. Smaller setups can often be arranged with a few weeks' notice."
+      },
+      {
+        question: "Do you handle setup and takedown?",
+        answer:
+          "Yes. Depending on the package we deliver, install, style on-site, and remove the décor after the event."
+      },
+      {
+        question: "Can you work with my budget?",
+        answer:
+          "We shape each concept around your budget and priorities, and we are transparent about what is possible."
+      },
+      {
+        question: "Do you provide flowers and rentals?",
+        answer:
+          "Yes, florals, candles, backdrops, and décor rentals can all be included in your concept."
+      }
+    ],
+    mapEyebrow: "Where we work",
+    mapTitle: "Serving celebrations across Iceland.",
+    instagramEyebrow: "Instagram",
+    instagramTitle: "Our latest work on Instagram.",
+    instagramFollow: "Follow on Instagram",
     services: [
       {
         title: "Weddings",
@@ -133,7 +224,7 @@ export const translations = {
       email: "Email",
       eventType: "Event type",
       chooseEventType: "Choose event type",
-      date: "Event date (YYYY-MM-DD)",
+      date: "Event date",
       location: "Location",
       guests: "Number of guests",
       budget: "Approx. budget",
@@ -150,7 +241,9 @@ export const translations = {
       messagePlaceholder: "Tell us what you are planning and what you would like us to create.",
       submit: "Send request",
       sending: "Sending...",
-      sent: "Thank you. We received your request and will contact you shortly.",
+      sentTitle: "Request received",
+      sent: "Thank you. We received your request and will contact you within one business day.",
+      sendAnother: "Send another request",
       error: "The request could not be sent. Please contact us by phone, email, or Instagram."
     },
     eventTypes: [
@@ -170,6 +263,8 @@ export const translations = {
     navPortfolio: "Verkefni",
     navProcess: "Ferlið",
     navInquiry: "Hafa samband",
+    openMenu: "Opna valmynd",
+    closeMenu: "Loka valmynd",
     heroKicker: "Viðburðaskreytingar um allt Ísland",
     heroTitle: "Draumkenndar skreytingar fyrir öll tilefni.",
     heroLead:
@@ -178,6 +273,7 @@ export const translations = {
     viewPortfolio: "Skoða verkefni",
     servicesEyebrow: "Þjónusta",
     servicesTitle: "Heildstæð skreytingaþjónusta fyrir alls konar tilefni.",
+    learnMore: "Sjá nánar",
     aboutEyebrow: "Um stúdíóið",
     aboutTitle: "Skreytingar með stemningu, jafnvægi og hátíðlegum blæ.",
     aboutText:
@@ -199,6 +295,91 @@ export const translations = {
     responseTime: "Við svörum yfirleitt innan eins virks dags.",
     contactUs: "Hafa samband við Dream Decor",
     followUs: "Fylgstu með nýjustu verkefnunum",
+    whatsappCta: "Spjalla á WhatsApp",
+    bookNoona: "Bóka ráðgjöf",
+    beforeLabel: "Fyrir",
+    afterLabel: "Eftir",
+    testimonialsEyebrow: "Umsagnir",
+    testimonialsTitle: "Hvað viðskiptavinir segja um samstarfið.",
+    testimonials: [
+      {
+        quote:
+          "Hvert smáatriði var úthugsað og persónulegt. Brúðkaupið okkar leit út eins og hugmyndataflan sem okkur dreymdi um.",
+        name: "Anna & Jón",
+        event: "Brúðkaup, Reykjavík"
+      },
+      {
+        quote:
+          "Þau umbreyttu salnum á nokkrum klukkustundum og sáu um allt á deginum. Algjörlega áhyggjulaust.",
+        name: "Kristín H.",
+        event: "Kynning fyrirtækis"
+      },
+      {
+        quote:
+          "Hlýlegt, faglegt og fullt af hugmyndum. Steypiboðið okkar var fallegt og allir tóku eftir því.",
+        name: "Elísabet G.",
+        event: "Steypiboð"
+      }
+    ],
+    pricingEyebrow: "Pakkar",
+    pricingTitle: "Pakki fyrir hvers konar tilefni.",
+    pricingNote:
+      "Hver viðburður er verðlagður sérstaklega. Sendu okkur upplýsingar og við útbúum sérsniðið tilboð.",
+    pricing: [
+      {
+        name: "Grunnur",
+        price: "Verð samkvæmt tilboði",
+        description: "Skreytingar fyrir minni samkvæmi og afmarkaðar uppsetningar.",
+        features: ["Hugmyndastefna", "Borð- og fókusskreyting", "Uppsetning á staðnum"]
+      },
+      {
+        name: "Signature",
+        price: "Verð samkvæmt tilboði",
+        description: "Vinsælasta heildarþjónustan okkar fyrir stærri viðburði.",
+        features: ["Heildarhugmynd og tafla", "Full skreyting staðar", "Uppsetning og niðurtaka"],
+        featured: true
+      },
+      {
+        name: "Sérsniðið",
+        price: "Verð samkvæmt tilboði",
+        description: "Algjörlega sérsniðin hönnun fyrir brúðkaup og glæsiviðburði.",
+        features: ["Sérsniðin hönnun", "Blóm og uppsetningar", "Umsjón á deginum"]
+      }
+    ],
+    faqEyebrow: "Algengar spurningar",
+    faqTitle: "Gott að vita áður en þú bókar.",
+    faq: [
+      {
+        question: "Hvaða svæði á Íslandi þjónustið þið?",
+        answer:
+          "Við erum á höfuðborgarsvæðinu og ferðumst um allt Ísland. Ferðir út fyrir Reykjavíkursvæðið geta bætt við litlu gjaldi."
+      },
+      {
+        question: "Hversu langt fram í tímann ætti ég að bóka?",
+        answer:
+          "Fyrir brúðkaup og stóra viðburði mælum við með 2–3 mánuðum. Minni uppsetningar er oft hægt að skipuleggja með nokkurra vikna fyrirvara."
+      },
+      {
+        question: "Sjáið þið um uppsetningu og niðurtöku?",
+        answer:
+          "Já. Eftir pakka afhendum við, setjum upp, stílum á staðnum og fjarlægjum skreytingar eftir viðburðinn."
+      },
+      {
+        question: "Getið þið unnið út frá mínum fjárhag?",
+        answer:
+          "Við mótum hverja hugmynd út frá fjárhag og áherslum þínum og erum gagnsæ um hvað er mögulegt."
+      },
+      {
+        question: "Útvegið þið blóm og leigumuni?",
+        answer:
+          "Já, blóm, kerti, bakgrunna og leigumuni má allt fella inn í hugmyndina þína."
+      }
+    ],
+    mapEyebrow: "Hvar við störfum",
+    mapTitle: "Þjónum viðburðum um allt Ísland.",
+    instagramEyebrow: "Instagram",
+    instagramTitle: "Nýjustu verkefnin á Instagram.",
+    instagramFollow: "Fylgja á Instagram",
     services: [
       {
         title: "Brúðkaup",
@@ -297,7 +478,7 @@ export const translations = {
       email: "Netfang",
       eventType: "Tegund viðburðar",
       chooseEventType: "Veldu tegund viðburðar",
-      date: "Dagsetning viðburðar (ÁÁÁÁ-MM-DD)",
+      date: "Dagsetning viðburðar",
       location: "Staðsetning",
       guests: "Fjöldi gesta",
       budget: "Áætluð fjárhagsáætlun",
@@ -314,7 +495,9 @@ export const translations = {
       messagePlaceholder: "Segðu okkur hvað þú ert að skipuleggja og hvað þú vilt að við sköpum.",
       submit: "Senda fyrirspurn",
       sending: "Sendi...",
-      sent: "Takk fyrir. Við höfum móttekið fyrirspurnina og höfum samband fljótlega.",
+      sentTitle: "Fyrirspurn móttekin",
+      sent: "Takk fyrir. Við höfum móttekið fyrirspurnina og höfum samband innan eins virks dags.",
+      sendAnother: "Senda aðra fyrirspurn",
       error: "Ekki tókst að senda fyrirspurnina. Hafðu samband í síma, með netfangi eða á Instagram."
     },
     eventTypes: [

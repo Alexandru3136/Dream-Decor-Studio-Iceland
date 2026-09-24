@@ -1,24 +1,62 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
 import {
   ArrowRight,
+  Calendar,
   Check,
+  ChevronDown,
   Facebook,
   Instagram,
   Mail,
   MapPin,
+  Menu,
   MessageCircle,
   Phone,
-  Sparkles
+  Quote,
+  Sparkles,
+  Star,
+  X
 } from "lucide-react";
 import { InquiryForm } from "@/components/InquiryForm";
+import { BeforeAfter } from "@/components/BeforeAfter";
+import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
+import { InstagramFeed } from "@/components/InstagramFeed";
+import { PriceEstimator } from "@/components/PriceEstimator";
 import { siteContent } from "@/content/site";
 import { Language, translations } from "@/content/translations";
+import { estimatorText } from "@/content/estimator";
 
 export default function Home() {
   const [language, setLanguage] = useState<Language>("en");
   const t = translations[language];
+
+  // Restore the visitor's preferred language: ?lang= wins, then a saved choice.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const fromUrl = params.get("lang");
+    let stored: string | null = null;
+    try {
+      stored = window.localStorage.getItem("dds-lang");
+    } catch {
+      stored = null;
+    }
+    const preferred = fromUrl ?? stored;
+    if (preferred === "is" || preferred === "en") {
+      setLanguage(preferred);
+    }
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.lang = language === "is" ? "is" : "en";
+    try {
+      window.localStorage.setItem("dds-lang", language);
+    } catch {
+      // Ignore storage failures (private mode, blocked cookies).
+    }
+  }, [language]);
 
   return (
     <main>
@@ -27,9 +65,16 @@ export default function Home() {
       <About language={language} />
       <WhyChooseUs language={language} />
       <PortfolioPreview language={language} />
+      <InstagramSection language={language} />
       <Process language={language} />
+      <Pricing language={language} />
+      <Estimator language={language} />
+      <Testimonials language={language} />
+      <Faq language={language} />
+      <ServiceArea language={language} />
       <Inquiry language={language} />
       <Footer language={language} />
+      <FloatingWhatsApp href={siteContent.contact.whatsapp} label={t.whatsappCta} />
     </main>
   );
 }
@@ -42,6 +87,7 @@ function Hero({
   setLanguage: (language: Language) => void;
 }) {
   const t = translations[language];
+  const [menuOpen, setMenuOpen] = useState(false);
   const nav = [
     { label: t.navServices, href: "#services" },
     { label: t.navPortfolio, href: "#portfolio" },
@@ -53,7 +99,7 @@ function Hero({
     <section className="hero-shell">
       <nav className="site-nav" aria-label="Main navigation">
         <a className="brand" href="#top" aria-label="Dream Decor Studio Iceland home">
-          <img src={siteContent.brand.logo} alt="" aria-hidden="true" />
+          <Image src={siteContent.brand.logo} alt="" aria-hidden="true" width={58} height={34} priority />
           <span>{siteContent.brand.shortName}</span>
         </a>
         <div className="nav-links">
@@ -78,7 +124,29 @@ function Hero({
         <a className="icon-link" href="#inquiry" aria-label={t.bookConsultation}>
           <Mail size={18} aria-hidden="true" />
         </a>
+        <button
+          className="nav-toggle"
+          type="button"
+          aria-label={menuOpen ? t.closeMenu : t.openMenu}
+          aria-expanded={menuOpen}
+          aria-controls="mobile-menu"
+          onClick={() => setMenuOpen((open) => !open)}
+        >
+          {menuOpen ? <X size={22} aria-hidden="true" /> : <Menu size={22} aria-hidden="true" />}
+        </button>
       </nav>
+
+      <div
+        id="mobile-menu"
+        className={menuOpen ? "mobile-menu open" : "mobile-menu"}
+        hidden={!menuOpen}
+      >
+        {nav.map((item) => (
+          <a key={item.href} href={item.href} onClick={() => setMenuOpen(false)}>
+            {item.label}
+          </a>
+        ))}
+      </div>
 
       <div id="top" className="hero-grid">
         <div className="hero-copy">
@@ -92,17 +160,32 @@ function Hero({
               {t.bookConsultation}
               <ArrowRight size={18} aria-hidden="true" />
             </a>
-            <a className="button secondary" href="#portfolio">
-              {t.viewPortfolio}
-            </a>
+            {siteContent.booking.noonaUrl ? (
+              <a
+                className="button secondary"
+                href={siteContent.booking.noonaUrl}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <Calendar size={18} aria-hidden="true" />
+                {t.bookNoona}
+              </a>
+            ) : (
+              <a className="button secondary" href="#portfolio">
+                {t.viewPortfolio}
+              </a>
+            )}
           </div>
         </div>
 
         <div className="hero-visual" aria-label="Elegant decorated event table">
-          <img
+          <Image
             className="hero-photo"
             src={siteContent.hero.image}
             alt="Elegant decorated event table with candles and flowers"
+            fill
+            priority
+            sizes="(max-width: 720px) 100vw, 50vw"
           />
         </div>
       </div>
@@ -117,23 +200,42 @@ function Services({ language }: { language: Language }) {
     <section id="services" className="section">
       <SectionIntro eyebrow={t.servicesEyebrow} title={t.servicesTitle} />
       <div className="service-grid">
-        {t.services.map((service) => (
-          <article className="service-card" key={service.title}>
-            <div className="service-icon">
-              <Sparkles size={20} aria-hidden="true" />
-            </div>
-            <h2>{service.title}</h2>
-            <p>{service.description}</p>
-            <ul>
-              {service.includes.map((item) => (
-                <li key={item}>
-                  <Check size={15} aria-hidden="true" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </article>
-        ))}
+        {t.services.map((service, index) => {
+          const href = siteContent.serviceLinks[index];
+          const inner = (
+            <>
+              <div className="service-icon">
+                <Sparkles size={20} aria-hidden="true" />
+              </div>
+              <h2>{service.title}</h2>
+              <p>{service.description}</p>
+              <ul>
+                {service.includes.map((item) => (
+                  <li key={item}>
+                    <Check size={15} aria-hidden="true" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              {href ? (
+                <span className="service-card-link">
+                  {t.learnMore}
+                  <ArrowRight size={16} aria-hidden="true" />
+                </span>
+              ) : null}
+            </>
+          );
+
+          return href ? (
+            <Link className="service-card linked" href={href} key={service.title}>
+              {inner}
+            </Link>
+          ) : (
+            <article className="service-card" key={service.title}>
+              {inner}
+            </article>
+          );
+        })}
       </div>
     </section>
   );
@@ -143,7 +245,7 @@ function About({ language }: { language: Language }) {
   const t = translations[language];
 
   return (
-    <section id="about" className="section about-section">
+    <section id="about" className="section about-section alt">
       <div>
         <SectionIntro eyebrow={t.aboutEyebrow} title={t.aboutTitle} text={t.aboutText} />
         <a className="text-link" href="#inquiry">
@@ -152,7 +254,12 @@ function About({ language }: { language: Language }) {
         </a>
       </div>
       <div className="about-media">
-        <img src={siteContent.about.image} alt="Elegant event table with floral decor" />
+        <BeforeAfter
+          before={siteContent.beforeAfter.before}
+          after={siteContent.beforeAfter.after}
+          beforeLabel={t.beforeLabel}
+          afterLabel={t.afterLabel}
+        />
       </div>
     </section>
   );
@@ -210,15 +317,34 @@ function PortfolioCarousel({
   title: string;
 }) {
   const [index, setIndex] = useState(0);
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
   const image = item.images[index];
 
   function move(direction: number) {
     setIndex((current) => (current + direction + item.images.length) % item.images.length);
   }
 
+  function handleTouchEnd(endX: number) {
+    if (touchStartX === null) return;
+    const delta = endX - touchStartX;
+    if (Math.abs(delta) > 40) {
+      move(delta < 0 ? 1 : -1);
+    }
+    setTouchStartX(null);
+  }
+
   return (
-    <div className="portfolio-carousel">
-      <img src={image} alt={`${title} gallery image ${index + 1}`} />
+    <div
+      className="portfolio-carousel"
+      onTouchStart={(event) => setTouchStartX(event.touches[0].clientX)}
+      onTouchEnd={(event) => handleTouchEnd(event.changedTouches[0].clientX)}
+    >
+      <Image
+        src={image}
+        alt={`${title} gallery image ${index + 1}`}
+        fill
+        sizes="(max-width: 720px) 100vw, (max-width: 1100px) 50vw, 33vw"
+      />
       <button className="carousel-arrow prev" type="button" aria-label="Previous image" onClick={() => move(-1)}>
         ‹
       </button>
@@ -303,7 +429,7 @@ function Footer({ language }: { language: Language }) {
   return (
     <footer className="site-footer">
       <div>
-        <img src={brand.logo} alt="" aria-hidden="true" />
+        <Image src={brand.logo} alt="" aria-hidden="true" width={62} height={42} />
         <div>
           <strong>{brand.name}</strong>
           <span>{t.contactUs}</span>
@@ -327,6 +453,134 @@ function Footer({ language }: { language: Language }) {
         </a>
       </div>
     </footer>
+  );
+}
+
+function Pricing({ language }: { language: Language }) {
+  const t = translations[language];
+
+  return (
+    <section id="pricing" className="section alt">
+      <SectionIntro eyebrow={t.pricingEyebrow} title={t.pricingTitle} />
+      <div className="pricing-grid">
+        {t.pricing.map((tier) => (
+          <article
+            className={"featured" in tier && tier.featured ? "pricing-card featured" : "pricing-card"}
+            key={tier.name}
+          >
+            <h3>{tier.name}</h3>
+            <p className="pricing-price">{tier.price}</p>
+            <p className="pricing-desc">{tier.description}</p>
+            <ul>
+              {tier.features.map((feature) => (
+                <li key={feature}>
+                  <Check size={15} aria-hidden="true" />
+                  {feature}
+                </li>
+              ))}
+            </ul>
+            <a className="button primary full" href="#inquiry">
+              {t.bookConsultation}
+            </a>
+          </article>
+        ))}
+      </div>
+      <p className="pricing-note">{t.pricingNote}</p>
+    </section>
+  );
+}
+
+function Estimator({ language }: { language: Language }) {
+  const t = estimatorText[language];
+
+  return (
+    <section id="estimate" className="section estimator-section">
+      <SectionIntro eyebrow={t.eyebrow} title={t.title} />
+      <PriceEstimator language={language} />
+    </section>
+  );
+}
+
+function Testimonials({ language }: { language: Language }) {
+  const t = translations[language];
+
+  return (
+    <section className="section testimonials-section">
+      <SectionIntro eyebrow={t.testimonialsEyebrow} title={t.testimonialsTitle} />
+      <div className="testimonials-grid">
+        {t.testimonials.map((item) => (
+          <article className="testimonial-card" key={item.name}>
+            <Quote size={22} aria-hidden="true" />
+            <div className="testimonial-stars" aria-label="5 out of 5">
+              {[0, 1, 2, 3, 4].map((star) => (
+                <Star key={star} size={15} aria-hidden="true" fill="currentColor" />
+              ))}
+            </div>
+            <p>{item.quote}</p>
+            <div className="testimonial-author">
+              <strong>{item.name}</strong>
+              <span>{item.event}</span>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function Faq({ language }: { language: Language }) {
+  const t = translations[language];
+
+  return (
+    <section id="faq" className="section faq-section alt">
+      <SectionIntro eyebrow={t.faqEyebrow} title={t.faqTitle} />
+      <div className="faq-list">
+        {t.faq.map((item) => (
+          <details className="faq-item" key={item.question}>
+            <summary>
+              {item.question}
+              <ChevronDown size={18} aria-hidden="true" />
+            </summary>
+            <p>{item.answer}</p>
+          </details>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function InstagramSection({ language }: { language: Language }) {
+  const t = translations[language];
+
+  return (
+    <section className="section instagram-section alt">
+      <SectionIntro eyebrow={t.instagramEyebrow} title={t.instagramTitle} />
+      <InstagramFeed
+        feedId={process.env.NEXT_PUBLIC_BEHOLD_FEED_ID}
+        profileUrl={siteContent.contact.instagram}
+        handle={siteContent.contact.instagramHandle}
+        follow={t.instagramFollow}
+      />
+    </section>
+  );
+}
+
+function ServiceArea({ language }: { language: Language }) {
+  const t = translations[language];
+
+  return (
+    <section className="section service-area-section">
+      <SectionIntro eyebrow={t.mapEyebrow} title={t.mapTitle} />
+      <div className="service-area-map">
+        <iframe
+          src={siteContent.map.embedUrl}
+          title={t.mapTitle}
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+          allowFullScreen
+        />
+      </div>
+    </section>
   );
 }
 

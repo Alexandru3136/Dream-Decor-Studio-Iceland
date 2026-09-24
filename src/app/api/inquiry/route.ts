@@ -102,12 +102,78 @@ export async function POST(request: Request) {
     });
 
     if (!response.ok) {
-      console.error("Resend failed:", response.status, await response.text());
+      // Backup trail: even if email delivery fails, the lead is captured in server logs.
+      console.error(
+        "Resend failed:",
+        response.status,
+        await response.text(),
+        "LEAD:",
+        JSON.stringify(inquiry)
+      );
       return NextResponse.json({ ok: false, message: "Email delivery failed." }, { status: 502 });
     }
+
+    // Permanent backup trail for every captured lead (visible in server logs).
+    console.log("LEAD received:", JSON.stringify(inquiry));
+
+    // Best-effort auto-reply to the customer. Never fail the request if this errors.
+    await sendAutoReply(inquiry, resendApiKey, resendFrom).catch((error) => {
+      console.error("Auto-reply failed (non-blocking):", error);
+    });
 
     return NextResponse.json({ ok: true });
   } catch {
     return NextResponse.json({ ok: false, message: "Invalid request." }, { status: 400 });
+  }
+}
+
+type Inquiry = {
+  name: string;
+  email: string;
+  eventType: string;
+  language: string;
+};
+
+async function sendAutoReply(inquiry: Inquiry, apiKey: string, from: string) {
+  const isIcelandic = inquiry.language.toLowerCase() === "is";
+  const firstName = inquiry.name.split(" ")[0] || inquiry.name;
+
+  const subject = isIcelandic
+    ? "Takk fyrir fyrirspurnina – Dream Decor Studio Iceland"
+    : "Thank you for your inquiry – Dream Decor Studio Iceland";
+
+  const greeting = isIcelandic ? `Hæ ${firstName},` : `Hi ${firstName},`;
+  const body = isIcelandic
+    ? "Takk fyrir að hafa samband við Dream Decor Studio Iceland. Við höfum móttekið fyrirspurnina þína og höfum samband innan eins virks dags til að ræða næstu skref."
+    : "Thank you for reaching out to Dream Decor Studio Iceland. We have received your inquiry and will contact you within one business day to discuss the next steps.";
+  const summaryLabel = isIcelandic ? "Tegund viðburðar" : "Event type";
+  const signoff = isIcelandic ? "Hlökkum til, Dream Decor teymið" : "Warm regards, The Dream Decor team";
+
+  const html = `
+    <div style="font-family:Arial,sans-serif;max-width:560px;margin:auto;color:#111827;line-height:1.6">
+      <h2 style="color:#07162b">Dream Decor Studio Iceland</h2>
+      <p>${escapeHtml(greeting)}</p>
+      <p>${escapeHtml(body)}</p>
+      <p style="color:#6b7280"><strong>${escapeHtml(summaryLabel)}:</strong> ${escapeHtml(inquiry.eventType)}</p>
+      <p>${escapeHtml(signoff)}</p>
+    </div>`;
+
+  const reply = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      from,
+      to: [inquiry.email],
+      reply_to: destinationEmail,
+      subject,
+      html
+    })
+  });
+
+  if (!reply.ok) {
+    throw new Error(`Auto-reply status ${reply.status}: ${await reply.text()}`);
   }
 }

@@ -4,69 +4,31 @@ export const siteContent = {
     shortName: "Dream Decor",
     logo: "/images/dream-decor-mark.jpg"
   },
-  navigation: [
-    { label: "Services", href: "#services" },
-    { label: "Portfolio", href: "#portfolio" },
-    { label: "Process", href: "#process" },
-    { label: "Inquiry", href: "#inquiry" }
-  ],
   hero: {
-    kicker: "Event decor in Iceland",
-    image: "/images/hero-event-table.jpg",
-    title: "Dreamlike decor for meaningful celebrations.",
-    description:
-      "Elegant event styling for weddings, private celebrations, seasonal settings, and intimate gatherings across Iceland."
+    image: "/images/hero-event-table.jpg"
   },
-  services: [
-    {
-      title: "Weddings",
-      description:
-        "A soft, refined setup for ceremonies, receptions, sweetheart tables, and photo moments.",
-      includes: ["Ceremony styling", "Table decor", "Floral direction"]
-    },
-    {
-      title: "Private events",
-      description:
-        "Decor concepts for birthdays, baby showers, baptisms, dinners, and family celebrations.",
-      includes: ["Concept board", "Venue setup", "Photo corners"]
-    },
-    {
-      title: "Seasonal styling",
-      description:
-        "Warm seasonal installations for homes, restaurants, salons, and boutique spaces.",
-      includes: ["Winter decor", "Window styling", "On-site setup"]
-    }
-  ],
   about: {
-    eyebrow: "About the studio",
-    title: "Decor with atmosphere, balance, and a sense of occasion.",
-    description:
-      "Dream Decor Studio Iceland creates refined event styling for celebrations that need to feel warm, elegant, and carefully composed. Each setup is shaped around the venue, season, guest experience, and the mood of the occasion.",
     image: "/images/stock/40-custom-16935902.jpg"
   },
-  why: [
-    {
-      title: "Custom concept",
-      description: "Every event receives a tailored visual direction, not a repeated template."
-    },
-    {
-      title: "On-site styling",
-      description: "Setup, placement, and finishing touches are handled with care at the venue."
-    },
-    {
-      title: "Season-aware decor",
-      description: "Colors, flowers, candles, and materials are selected to suit the Icelandic setting."
-    },
-    {
-      title: "Clear planning",
-      description: "Dates, location, guest count, budget, and mood are clarified before styling begins."
-    }
+  // TODO(client): replace with real before/after photos of the same venue for the strongest effect.
+  beforeAfter: {
+    before: "/images/stock/17-private-5814107.jpg",
+    after: "/images/stock/01-wedding-17022991.jpg"
+  },
+  // Links for the homepage service cards, aligned by index with translations.services.
+  // Empty string = no dedicated page yet (card stays non-clickable until we build it).
+  serviceLinks: [
+    "/thjonusta/brudkaup", // Weddings
+    "/thjonusta/bonord", // Proposals & engagements
+    "/thjonusta/barnavidburdir", // Baby celebrations
+    "/thjonusta/fyrirtaekjavidburdir", // Corporate events
+    "/thjonusta/arstidaskreytingar", // Seasonal & holiday
+    "/thjonusta/serividburdir" // Private & custom events
   ],
+  // Portfolio copy (title/description) lives in translations.ts; only labels + images are here.
   portfolio: [
     {
       label: "01",
-      title: "Wedding settings",
-      description: "Ceremony arches, tablescapes, candles, and floral moments for elegant weddings.",
       images: [
         "/images/stock/01-wedding-17022991.jpg",
         "/images/stock/03-wedding-33964860.jpg",
@@ -82,8 +44,6 @@ export const siteContent = {
     },
     {
       label: "02",
-      title: "Proposals and engagements",
-      description: "Romantic settings for proposals, engagements, and intimate celebrations.",
       images: [
         "/images/stock/31-custom-34611366.jpg",
         "/images/stock/32-custom-36027420.jpg",
@@ -94,32 +54,28 @@ export const siteContent = {
     },
     {
       label: "03",
-      title: "Baby celebrations",
-      description: "Gender reveals, baby showers, baptisms, and family milestones.",
       images: [
-        "/images/stock/11-private-28988081.jpg",
-        "/images/stock/12-private-28988084.jpg",
-        "/images/stock/13-private-34278807.jpg",
-        "/images/stock/14-private-34597787.jpg",
-        "/images/stock/15-private-16958224.jpg"
+        "/images/stock/16-private-29964260.jpg",
+        "/images/stock/baby-a.jpg",
+        "/images/stock/baby-b.jpg",
+        "/images/stock/baby-c.jpg",
+        "/images/stock/baby-d.jpg",
+        "/images/stock/baby-e.jpg"
       ]
     },
     {
       label: "04",
-      title: "Corporate events",
-      description: "Polished settings for launches, dinners, teams, and branded gatherings.",
       images: [
-        "/images/stock/16-private-29964260.jpg",
-        "/images/stock/17-private-5814107.jpg",
         "/images/stock/18-private-16120267.jpg",
-        "/images/stock/19-private-34987100.jpg",
-        "/images/stock/20-private-14932711.jpg"
+        "/images/stock/corp-a.jpg",
+        "/images/stock/corp-b.jpg",
+        "/images/stock/corp-c.jpg",
+        "/images/stock/corp-d.jpg",
+        "/images/stock/corp-e.jpg"
       ]
     },
     {
       label: "05",
-      title: "Seasonal spaces",
-      description: "A visual archive for holiday decor, shop displays, and styled interiors.",
       images: [
         "/images/stock/21-seasonal-35134120.jpg",
         "/images/stock/22-seasonal-30592868.jpg",
@@ -135,45 +91,16 @@ export const siteContent = {
     },
     {
       label: "06",
-      title: "Private and custom events",
-      description: "Birthdays, anniversaries, themed setups, and events outside the main categories.",
       images: [
-        "/images/stock/36-custom-35160792.jpg",
-        "/images/stock/37-custom-35985258.jpg",
-        "/images/stock/38-custom-33136448.jpg",
-        "/images/stock/39-custom-35017880.jpg",
-        "/images/stock/40-custom-16935902.jpg"
+        "/images/stock/11-private-28988081.jpg",
+        "/images/stock/12-private-28988084.jpg",
+        "/images/stock/13-private-34278807.jpg",
+        "/images/stock/14-private-34597787.jpg",
+        "/images/stock/15-private-16958224.jpg"
       ]
     }
   ],
-  process: [
-    {
-      title: "Consultation",
-      description: "We gather the date, location, guest count, style direction, and practical needs."
-    },
-    {
-      title: "Concept",
-      description: "The mood, colors, materials, and decor elements are shaped into a clear plan."
-    },
-    {
-      title: "Setup",
-      description: "Decor is prepared, delivered, installed, adjusted on-site, and removed if needed."
-    }
-  ],
   contact: {
-    description:
-      "Share the practical details and the mood you imagine. We will use your answers to prepare a tailored decor proposal.",
-    eventTypes: [
-      "Wedding",
-      "Proposal / Engagement",
-      "Gender Reveal",
-      "Baby Shower / Baptism",
-      "Birthday / Anniversary",
-      "Corporate Event",
-      "Seasonal / Holiday Decor",
-      "Private Event",
-      "Other"
-    ],
     location: "Iceland",
     email: "dreamdecor.iceland@gmail.com",
     phone: "+354 766 6488",
@@ -182,6 +109,17 @@ export const siteContent = {
     instagram: "https://www.instagram.com/dream.decor.iceland/",
     instagramHandle: "@dream.decor.iceland",
     facebook: "https://www.facebook.com/profile.php?id=61592121797915",
-    facebookLabel: "Dream Decor"
+    facebookLabel: "Dream Decor",
+    // TODO(client): replace with the studio's exact coordinates for accurate local SEO.
+    geo: { latitude: 64.1466, longitude: -21.9426 }
+  },
+  // TODO(client): paste the Noona booking link when the business account is ready. Empty = button hidden.
+  booking: {
+    noonaUrl: ""
+  },
+  // TODO(client): replace with a Google Maps embed URL centred on the studio / service area.
+  map: {
+    embedUrl:
+      "https://www.google.com/maps?q=Reykjavik,+Iceland&output=embed"
   }
 };

@@ -1,7 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { Language, translations } from "@/content/translations";
 
 type FormStatus = "idle" | "sending" | "sent" | "error";
@@ -39,6 +39,19 @@ export function InquiryForm({ language }: { language: Language }) {
     }
   }
 
+  if (status === "sent") {
+    return (
+      <div className="inquiry-success" role="status" aria-live="polite">
+        <CheckCircle2 size={44} aria-hidden="true" />
+        <h3>{t.sentTitle}</h3>
+        <p>{t.sent}</p>
+        <button className="button secondary" type="button" onClick={() => setStatus("idle")}>
+          {t.sendAnother}
+        </button>
+      </div>
+    );
+  }
+
   return (
     <form className="inquiry-form" onSubmit={handleSubmit}>
       <label className="honeypot" aria-hidden="true">
@@ -70,14 +83,7 @@ export function InquiryForm({ language }: { language: Language }) {
       </label>
       <label>
         {t.date}
-        <input
-          type="text"
-          name="date"
-          placeholder="2026-08-24"
-          inputMode="numeric"
-          pattern="\\d{4}-\\d{2}-\\d{2}"
-          title="Use YYYY-MM-DD, for example 2026-08-24"
-        />
+        <input type="date" name="date" min={new Date().toISOString().slice(0, 10)} />
       </label>
       <label>
         {t.location}
@@ -125,7 +131,6 @@ export function InquiryForm({ language }: { language: Language }) {
         {status === "sending" ? t.sending : t.submit}
         <ArrowRight size={18} aria-hidden="true" />
       </button>
-      {status === "sent" ? <p className="form-status full">{t.sent}</p> : null}
       {status === "error" ? <p className="form-status error full">{t.error}</p> : null}
       {status === "error" ? (
         <p className="form-fallback full">

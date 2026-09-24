@@ -48,7 +48,9 @@ textarea {
 }
 
 main {
-  overflow: hidden;
+  /* clip (not hidden) so decorative gradients don't cause horizontal scroll
+     while still allowing position: sticky to work inside sections. */
+  overflow-x: clip;
 }
 
 .hero-shell {
@@ -145,6 +147,23 @@ main {
   border-color: rgba(255, 255, 255, 0.58);
 }
 
+.nav-toggle {
+  display: none;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  color: var(--ivory);
+  background: transparent;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.mobile-menu {
+  display: none;
+}
+
 .hero-grid {
   width: min(1440px, 100%);
   margin: 0 auto;
@@ -229,8 +248,8 @@ h1 {
 }
 
 .button {
-  min-height: 48px;
-  padding: 0 20px;
+  min-height: 50px;
+  padding: 0 30px;
   border: 1px solid currentColor;
   display: inline-flex;
   align-items: center;
@@ -297,6 +316,13 @@ h1 {
     linear-gradient(180deg, var(--deep), var(--deep-2));
 }
 
+/* Alternating section shade for rhythm — subtle, glow from the opposite corner. */
+.section.alt {
+  background:
+    radial-gradient(circle at 8% 88%, rgba(200, 155, 79, 0.1), transparent 34%),
+    linear-gradient(180deg, var(--deep-2), var(--deep-3));
+}
+
 .section-intro {
   max-width: 760px;
   margin-bottom: 34px;
@@ -351,6 +377,7 @@ h1 {
 }
 
 .about-media {
+  position: relative;
   min-height: 520px;
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -462,6 +489,9 @@ h1 {
 
 .portfolio-copy {
   padding-left: clamp(0px, 5vw, 70px);
+  position: sticky;
+  top: 40px;
+  align-self: start;
 }
 
 .portfolio-grid {
@@ -806,6 +836,10 @@ select option {
     grid-template-columns: 1fr;
   }
 
+  .portfolio-copy {
+    position: static;
+  }
+
   .hero-visual {
     min-height: 440px;
   }
@@ -858,13 +892,43 @@ select option {
     height: 28px;
   }
 
+  .language-switch {
+    gap: 4px;
+  }
+
   .language-switch button {
-    min-width: 34px;
+    min-width: 32px;
     height: 32px;
   }
 
   .icon-link {
     display: none;
+  }
+
+  .nav-toggle {
+    display: inline-flex;
+    width: 40px;
+    height: 40px;
+  }
+
+  .mobile-menu.open {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px 14px 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+    background: var(--deep-2);
+  }
+
+  .mobile-menu.open a {
+    padding: 14px 8px;
+    font-size: 16px;
+    color: rgba(255, 253, 247, 0.9);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .mobile-menu.open a:last-child {
+    border-bottom: none;
   }
 
   .hero-grid {
@@ -943,5 +1007,841 @@ select option {
   .inquiry-section {
     border-radius: 0;
     margin-bottom: 0;
+  }
+}
+
+@media (max-width: 430px) {
+  .brand span {
+    display: none;
+  }
+}
+
+/* ---------- Floating WhatsApp button ---------- */
+.floating-whatsapp {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 60;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background: #25d366;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.floating-whatsapp:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.42);
+}
+
+/* ---------- Before / After slider ---------- */
+.before-after {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.before-after-img {
+  object-fit: cover;
+}
+
+.before-after-clip {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+.before-after-handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  margin-left: -1px;
+  background: var(--gold);
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.before-after-handle span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--gold);
+  color: var(--deep);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+}
+
+.ba-tag {
+  position: absolute;
+  top: 12px;
+  z-index: 3;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ivory);
+  background: rgba(7, 17, 38, 0.7);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+}
+
+.ba-tag-before {
+  left: 12px;
+}
+
+.ba-tag-after {
+  right: 12px;
+  z-index: 1;
+}
+
+.before-after-range {
+  position: absolute;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+  width: 76%;
+  z-index: 4;
+  accent-color: var(--gold);
+  cursor: ew-resize;
+}
+
+/* ---------- Pricing ---------- */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.pricing-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 30px 26px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+}
+
+.pricing-card.featured {
+  border-color: var(--gold);
+  box-shadow: 0 20px 60px rgba(200, 155, 79, 0.16);
+}
+
+.pricing-card h3 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.pricing-price {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 26px;
+  color: var(--gold-soft);
+}
+
+.pricing-desc {
+  color: var(--muted);
+  font-size: 15px;
+}
+
+.pricing-card ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+.pricing-card li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  color: rgba(255, 253, 247, 0.86);
+}
+
+.pricing-card li svg {
+  color: var(--gold);
+  flex-shrink: 0;
+}
+
+.pricing-note {
+  margin-top: 22px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* ---------- Testimonials ---------- */
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.testimonial-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 28px 26px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+}
+
+.testimonial-card > svg {
+  color: var(--gold);
+  opacity: 0.7;
+}
+
+.testimonial-stars {
+  display: inline-flex;
+  gap: 3px;
+  color: var(--gold);
+}
+
+.testimonial-card p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: rgba(255, 253, 247, 0.9);
+}
+
+.testimonial-author {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: auto;
+}
+
+.testimonial-author strong {
+  color: var(--ivory);
+}
+
+.testimonial-author span {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* ---------- FAQ ---------- */
+.faq-list {
+  width: min(820px, 100%);
+  margin: 0 auto;
+}
+
+.faq-item {
+  border-bottom: 1px solid var(--line);
+}
+
+.faq-item summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 4px;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--ivory);
+}
+
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-item summary svg {
+  color: var(--gold);
+  transition: transform 200ms ease;
+  flex-shrink: 0;
+}
+
+.faq-item[open] summary svg {
+  transform: rotate(180deg);
+}
+
+.faq-item p {
+  margin: 0;
+  padding: 0 4px 22px;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+/* ---------- Service area map ---------- */
+.service-area-map {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.service-area-map iframe {
+  display: block;
+  width: 100%;
+  height: 420px;
+  border: 0;
+  filter: grayscale(0.2) contrast(1.05);
+}
+
+/* ---------- Inquiry success card ---------- */
+.inquiry-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+  padding: 40px 26px;
+  border: 1px solid var(--gold);
+  border-radius: 10px;
+  background: linear-gradient(160deg, rgba(200, 155, 79, 0.1), rgba(255, 255, 255, 0.02));
+}
+
+.inquiry-success svg {
+  color: var(--gold);
+}
+
+.inquiry-success h3 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.inquiry-success p {
+  margin: 0;
+  color: rgba(255, 253, 247, 0.86);
+  max-width: 44ch;
+}
+
+.inquiry-success .button {
+  margin-top: 8px;
+}
+
+/* ---------- Price estimator ---------- */
+.estimator {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: clamp(24px, 4vw, 48px);
+  align-items: stretch;
+}
+
+.estimator-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+.estimator-field {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.estimator-label {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold-soft);
+}
+
+.estimator-segments {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.estimator-segments button {
+  flex: 1;
+  min-width: 96px;
+  height: 46px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ivory);
+  font: inherit;
+  font-weight: 700;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
+}
+
+.estimator-segments button.active {
+  color: var(--deep);
+  background: linear-gradient(135deg, var(--gold-soft), var(--gold));
+  border-color: var(--gold);
+}
+
+.estimator-field input[type="range"] {
+  width: 100%;
+  accent-color: var(--gold);
+  cursor: ew-resize;
+}
+
+.estimator-addons {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.estimator-addons label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-size: 14px;
+  color: rgba(255, 253, 247, 0.88);
+  cursor: pointer;
+  transition: border-color 160ms ease, background 160ms ease;
+}
+
+.estimator-addons label.checked {
+  border-color: var(--gold);
+  background: rgba(200, 155, 79, 0.12);
+}
+
+.estimator-addons input[type="checkbox"] {
+  accent-color: var(--gold);
+  width: 16px;
+  height: 16px;
+}
+
+.estimator-result {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  padding: 30px 28px;
+  border: 1px solid var(--gold);
+  border-radius: 12px;
+  background: linear-gradient(160deg, rgba(200, 155, 79, 0.12), rgba(255, 255, 255, 0.02));
+}
+
+.estimator-result-label {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold-soft);
+}
+
+.estimator-range {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(24px, 3vw, 34px);
+  line-height: 1.15;
+  color: var(--ivory);
+}
+
+.estimator-range span {
+  color: var(--gold);
+  padding: 0 4px;
+}
+
+.estimator-note {
+  margin: 4px 0 8px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+/* ---------- Instagram feed ---------- */
+.ig-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.ig-item {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--deep-2);
+}
+
+.ig-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 300ms ease;
+}
+
+.ig-item:hover img {
+  transform: scale(1.06);
+}
+
+.ig-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ivory);
+  background: rgba(7, 17, 38, 0.35);
+  opacity: 0;
+  transition: opacity 220ms ease;
+}
+
+.ig-item:hover .ig-overlay {
+  opacity: 1;
+}
+
+.ig-skeleton {
+  animation: ig-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes ig-pulse {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.ig-follow {
+  margin-top: 22px;
+  display: flex;
+  justify-content: center;
+}
+
+.ig-fallback {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 44px 26px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+}
+
+.ig-fallback svg {
+  color: var(--gold);
+}
+
+/* ---------- Service pages (SEO landing) ---------- */
+.service-page {
+  color: var(--ivory);
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: rgba(255, 253, 247, 0.7);
+}
+
+.breadcrumb a:hover {
+  color: var(--ivory);
+}
+
+.breadcrumb span[aria-current] {
+  color: var(--gold-soft);
+}
+
+.service-hero-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(28px, 5vw, 64px);
+  align-items: center;
+  width: min(1440px, 100%);
+  margin: 0 auto;
+  padding: clamp(36px, 6vw, 80px) clamp(18px, 5vw, 70px);
+}
+
+.service-hero-copy h1 {
+  font-size: clamp(38px, 5vw, 62px);
+  margin: 6px 0;
+}
+
+.service-hero-copy .lead {
+  max-width: 52ch;
+  margin-bottom: 26px;
+}
+
+.service-trust {
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  gap: 8px;
+  margin-top: 22px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.service-trust svg {
+  color: var(--gold);
+}
+
+.service-hero-visual {
+  position: relative;
+  aspect-ratio: 4 / 3.4;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+}
+
+.service-hero-visual img {
+  object-fit: cover;
+}
+
+.service-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.service-step {
+  padding: 28px 26px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+}
+
+.service-step span {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 24px;
+  color: var(--gold);
+}
+
+.service-step h3 {
+  margin: 10px 0 8px;
+  font-size: 20px;
+}
+
+.service-step p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.service-intro {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: clamp(28px, 5vw, 64px);
+  align-items: start;
+}
+
+.service-intro h2 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(26px, 3.4vw, 36px);
+  font-weight: 500;
+  margin-top: 0;
+}
+
+.service-intro p {
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.service-includes {
+  padding: 26px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+}
+
+.service-includes h3 {
+  margin: 0 0 16px;
+  font-size: 18px;
+}
+
+.service-includes ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.service-includes li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: rgba(255, 253, 247, 0.88);
+  line-height: 1.5;
+}
+
+.service-includes li svg {
+  color: var(--gold);
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.service-gallery {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.service-gallery-item {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+}
+
+.service-gallery-item img {
+  object-fit: cover;
+}
+
+/* Tighter rhythm + hairline separators so stacked sections don't feel empty. */
+.service-page .section {
+  padding-top: clamp(44px, 6vw, 84px);
+  padding-bottom: clamp(44px, 6vw, 84px);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.service-faq {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: clamp(28px, 5vw, 64px);
+  align-items: start;
+}
+
+.service-faq-intro h2 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(30px, 4vw, 48px);
+  font-weight: 500;
+  line-height: 1.05;
+  margin: 0;
+}
+
+.service-faq-intro .gold-divider {
+  width: 160px;
+  margin: 18px 0 20px;
+}
+
+.service-faq-intro p {
+  color: var(--muted);
+  line-height: 1.65;
+  max-width: 42ch;
+  margin: 0 0 22px;
+}
+
+.service-faq .faq-list {
+  width: 100%;
+  margin: 0;
+}
+
+.service-card.linked {
+  cursor: pointer;
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.service-card.linked:hover {
+  transform: translateY(-3px);
+  border-color: var(--gold);
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.28);
+}
+
+.service-card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 18px;
+  padding: 9px 16px;
+  border: 1px solid var(--gold);
+  border-radius: 999px;
+  color: var(--gold);
+  font-weight: 700;
+  font-size: 13px;
+  transition: background 180ms ease, color 180ms ease;
+}
+
+.service-card.linked:hover .service-card-link {
+  background: linear-gradient(135deg, var(--gold-soft), var(--gold));
+  color: var(--deep);
+}
+
+.service-cta {
+  text-align: center;
+  padding: clamp(48px, 7vw, 90px) clamp(18px, 5vw, 70px);
+  background:
+    radial-gradient(circle at 50% 0%, rgba(200, 155, 79, 0.16), transparent 55%),
+    var(--deep-2);
+  border-top: 1px solid var(--line);
+}
+
+/* CTA band with a background photo — the inline style supplies the gradient + image. */
+.service-cta.has-image {
+  background-size: cover;
+  background-position: center;
+  border-radius: 0;
+}
+
+.service-cta.has-image h2 {
+  color: var(--ivory);
+}
+
+.service-cta.has-image p {
+  color: rgba(255, 253, 247, 0.85);
+}
+
+.service-cta h2 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 500;
+  margin: 0 0 12px;
+}
+
+.service-cta p {
+  color: var(--muted);
+  max-width: 52ch;
+  margin: 0 auto 26px;
+}
+
+/* ---------- New sections: mobile ---------- */
+@media (max-width: 900px) {
+  .pricing-grid,
+  .testimonials-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ig-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .service-hero-split,
+  .service-intro,
+  .service-steps,
+  .service-faq,
+  .estimator {
+    grid-template-columns: 1fr;
+  }
+
+  .service-hero-visual {
+    order: -1;
+  }
+
+  .service-gallery {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .service-area-map iframe {
+    height: 320px;
   }
 }
