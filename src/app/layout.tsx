@@ -29,21 +29,14 @@ export const metadata: Metadata = {
     siteName: "Dream Decor Studio Iceland",
     type: "website",
     locale: "en_IS",
-    images: [
-      {
-        url: "/images/hero-event-table.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Elegant decorated event table by Dream Decor Studio Iceland"
-      }
-    ]
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Dream Decor Studio Iceland" }]
   },
   twitter: {
     card: "summary_large_image",
     title: "Dream Decor Studio Iceland",
     description:
       "Tailored event decor for weddings, proposals, corporate events, and private celebrations across Iceland.",
-    images: ["/images/hero-event-table.jpg"]
+    images: ["/opengraph-image"]
   },
   robots: {
     index: true,
@@ -55,7 +48,7 @@ const structuredData = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
   name: siteContent.brand.name,
-  image: `${siteUrl}/images/hero-event-table.jpg`,
+  image: `${siteUrl}/opengraph-image`,
   url: siteUrl,
   email: siteContent.contact.email,
   telephone: siteContent.contact.phone,
@@ -76,13 +69,7 @@ const structuredData = {
     name: "Iceland"
   },
   sameAs: [siteContent.contact.instagram, siteContent.contact.facebook],
-  priceRange: "$$",
-  // TODO(client): keep this rating in sync with the real reviews shown on the site.
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: "5.0",
-    reviewCount: "3"
-  }
+  priceRange: "$$"
 };
 
 const gaId = process.env.NEXT_PUBLIC_GA_ID;

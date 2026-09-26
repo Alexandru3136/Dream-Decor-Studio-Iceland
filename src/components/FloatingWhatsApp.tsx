@@ -1,4 +1,7 @@
+"use client";
+
 import { MessageCircle } from "lucide-react";
+import { trackEvent } from "@/lib/analytics";
 
 export function FloatingWhatsApp({ href, label }: { href: string; label: string }) {
   return (
@@ -9,6 +12,7 @@ export function FloatingWhatsApp({ href, label }: { href: string; label: string 
       rel="noreferrer"
       aria-label={label}
       title={label}
+      onClick={() => trackEvent("whatsapp_click")}
     >
       <MessageCircle size={26} aria-hidden="true" />
     </a>

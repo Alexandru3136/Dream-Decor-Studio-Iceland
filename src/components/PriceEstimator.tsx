@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { ArrowRight } from "lucide-react";
+import { trackEvent } from "@/lib/analytics";
 import { estimatorConfig, estimatorText } from "@/content/estimator";
 import type { Language } from "@/content/translations";
 
@@ -102,7 +103,7 @@ export function PriceEstimator({ language }: { language: Language }) {
           {formatISK(low)} <span>–</span> {formatISK(high)}
         </p>
         <p className="estimator-note">{t.note}</p>
-        <a className="button primary full" href="#inquiry">
+        <a className="button primary full" href="#inquiry" onClick={() => trackEvent("estimator_cta", { package: pkg, guests, estimate_low: low, estimate_high: high })}>
           {t.cta}
           <ArrowRight size={18} aria-hidden="true" />
         </a>

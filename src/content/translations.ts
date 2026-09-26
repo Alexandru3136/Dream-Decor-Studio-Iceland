@@ -42,29 +42,13 @@ export const translations = {
     bookNoona: "Book a consultation",
     beforeLabel: "Before",
     afterLabel: "After",
-    testimonialsEyebrow: "Testimonials",
+    testimonialsEyebrow: "Reviews",
     testimonialsTitle: "What clients say about working with us.",
-    // TODO(client): replace with real client reviews (and keep the aggregate rating in layout.tsx in sync).
-    testimonials: [
-      {
-        quote:
-          "Every detail felt considered and personal. Our wedding looked like the moodboard we dreamed of.",
-        name: "Anna & Jón",
-        event: "Wedding, Reykjavik"
-      },
-      {
-        quote:
-          "They transformed the venue in hours and handled everything on the day. Completely stress-free.",
-        name: "Kristín H.",
-        event: "Corporate launch"
-      },
-      {
-        quote:
-          "Warm, professional, and full of ideas. Our baby shower was beautiful and everyone noticed.",
-        name: "Elísabet G.",
-        event: "Baby shower"
-      }
-    ],
+    testimonialsPlaceholder: "Client reviews will appear here as we complete our first events. In the meantime, follow us on Instagram to see our work in progress.",
+    founderEyebrow: "Meet the founder",
+    founderTitle: "The person behind every concept.",
+    founderText: "Dream Decor Studio Iceland was founded with a simple belief: every celebration deserves a setting that feels as special as the moment itself. From the first conversation to the final candle, every detail is personal.",
+    founderName: "Founder, Dream Decor Studio Iceland",
     pricingEyebrow: "Packages",
     pricingTitle: "A package for every kind of celebration.",
     pricingNote:
@@ -225,20 +209,8 @@ export const translations = {
       eventType: "Event type",
       chooseEventType: "Choose event type",
       date: "Event date",
-      location: "Location",
-      guests: "Number of guests",
-      budget: "Approx. budget",
-      budgetPlaceholder: "Optional",
-      contactMethod: "Preferred contact",
-      chooseContactMethod: "Choose contact method",
-      contactMethods: ["Phone", "Email", "WhatsApp", "Instagram", "Messenger"],
-      support: "Support needed",
-      chooseSupport: "Choose support",
-      supportOptions: ["Full concept and setup", "Setup and styling only", "Consultation first"],
-      mood: "Preferred style / mood",
-      moodPlaceholder: "Romantic, modern, festive, luxury...",
-      message: "Message",
-      messagePlaceholder: "Tell us what you are planning and what you would like us to create.",
+      message: "Tell us about your event",
+      messagePlaceholder: "Date, venue, number of guests, style you imagine — share as much or as little as you like.",
       submit: "Send request",
       sending: "Sending...",
       sentTitle: "Request received",
@@ -301,26 +273,11 @@ export const translations = {
     afterLabel: "Eftir",
     testimonialsEyebrow: "Umsagnir",
     testimonialsTitle: "Hvað viðskiptavinir segja um samstarfið.",
-    testimonials: [
-      {
-        quote:
-          "Hvert smáatriði var úthugsað og persónulegt. Brúðkaupið okkar leit út eins og hugmyndataflan sem okkur dreymdi um.",
-        name: "Anna & Jón",
-        event: "Brúðkaup, Reykjavík"
-      },
-      {
-        quote:
-          "Þau umbreyttu salnum á nokkrum klukkustundum og sáu um allt á deginum. Algjörlega áhyggjulaust.",
-        name: "Kristín H.",
-        event: "Kynning fyrirtækis"
-      },
-      {
-        quote:
-          "Hlýlegt, faglegt og fullt af hugmyndum. Steypiboðið okkar var fallegt og allir tóku eftir því.",
-        name: "Elísabet G.",
-        event: "Steypiboð"
-      }
-    ],
+    testimonialsPlaceholder: "Umsagnir viðskiptavina birtast hér eftir fyrstu verkefnin okkar. Á meðan er hægt að fylgjast með okkur á Instagram.",
+    founderEyebrow: "Kynntu þér stofnandann",
+    founderTitle: "Manneskjan á bak við hverja hugmynd.",
+    founderText: "Dream Decor Studio Iceland var stofnað með einfalda trú: hvert tilefni á skilið umgjörð sem finnst jafn sérstök og augnablikið sjálft. Frá fyrsta samtali til síðasta kertis er hvert smáatriði persónulegt.",
+    founderName: "Stofnandi, Dream Decor Studio Iceland",
     pricingEyebrow: "Pakkar",
     pricingTitle: "Pakki fyrir hvers konar tilefni.",
     pricingNote:
@@ -479,20 +436,8 @@ export const translations = {
       eventType: "Tegund viðburðar",
       chooseEventType: "Veldu tegund viðburðar",
       date: "Dagsetning viðburðar",
-      location: "Staðsetning",
-      guests: "Fjöldi gesta",
-      budget: "Áætluð fjárhagsáætlun",
-      budgetPlaceholder: "Valfrjálst",
-      contactMethod: "Ósk um samskiptaleið",
-      chooseContactMethod: "Veldu samskiptaleið",
-      contactMethods: ["Sími", "Netfang", "WhatsApp", "Instagram", "Messenger"],
-      support: "Þjónusta sem óskað er eftir",
-      chooseSupport: "Veldu þjónustu",
-      supportOptions: ["Heildarhugmynd og uppsetning", "Uppsetning og stílisering", "Ráðgjöf fyrst"],
-      mood: "Óskaður stíll / stemning",
-      moodPlaceholder: "Rómantískt, nútímalegt, hátíðlegt, lúxus...",
-      message: "Skilaboð",
-      messagePlaceholder: "Segðu okkur hvað þú ert að skipuleggja og hvað þú vilt að við sköpum.",
+      message: "Segðu okkur frá viðburðinum",
+      messagePlaceholder: "Dagsetning, staður, gestafjöldi, stemning — deildu eins miklu eða litlu og þú vilt.",
       submit: "Senda fyrirspurn",
       sending: "Sendi...",
       sentTitle: "Fyrirspurn móttekin",

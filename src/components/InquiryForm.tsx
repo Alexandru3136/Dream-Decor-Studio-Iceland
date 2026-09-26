@@ -2,6 +2,7 @@
 
 import { FormEvent, useState } from "react";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { trackEvent } from "@/lib/analytics";
 import { Language, translations } from "@/content/translations";
 
 type FormStatus = "idle" | "sending" | "sent" | "error";
@@ -33,6 +34,7 @@ export function InquiryForm({ language }: { language: Language }) {
       }
 
       setStatus("sent");
+      trackEvent("inquiry_submit", { event_type: String(formData.get("eventType") ?? "") });
       event.currentTarget.reset();
     } catch {
       setStatus("error");
@@ -84,44 +86,6 @@ export function InquiryForm({ language }: { language: Language }) {
       <label>
         {t.date}
         <input type="date" name="date" min={new Date().toISOString().slice(0, 10)} />
-      </label>
-      <label>
-        {t.location}
-        <input type="text" name="location" placeholder="Reykjavik, Akureyri..." />
-      </label>
-      <label>
-        {t.guests}
-        <input type="number" min="1" name="guests" placeholder="80" />
-      </label>
-      <label>
-        {t.budget}
-        <input type="text" name="budget" placeholder={t.budgetPlaceholder} />
-      </label>
-      <label>
-        {t.contactMethod}
-        <select name="contactMethod" defaultValue="" required>
-          <option value="" disabled>
-            {t.chooseContactMethod}
-          </option>
-          {t.contactMethods.map((option) => (
-            <option key={option}>{option}</option>
-          ))}
-        </select>
-      </label>
-      <label>
-        {t.support}
-        <select name="support" defaultValue="">
-          <option value="" disabled>
-            {t.chooseSupport}
-          </option>
-          {t.supportOptions.map((option) => (
-            <option key={option}>{option}</option>
-          ))}
-        </select>
-      </label>
-      <label className="full">
-        {t.mood}
-        <input type="text" name="mood" placeholder={t.moodPlaceholder} />
       </label>
       <label className="full">
         {t.message}

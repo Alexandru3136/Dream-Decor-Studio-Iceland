@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -17,7 +17,6 @@ import {
   Phone,
   Quote,
   Sparkles,
-  Star,
   X
 } from "lucide-react";
 import { InquiryForm } from "@/components/InquiryForm";
@@ -27,6 +26,7 @@ import { InstagramFeed } from "@/components/InstagramFeed";
 import { PriceEstimator } from "@/components/PriceEstimator";
 import { siteContent } from "@/content/site";
 import { Language, translations } from "@/content/translations";
+import { trackEvent } from "@/lib/analytics";
 import { estimatorText } from "@/content/estimator";
 
 export default function Home() {
@@ -63,6 +63,7 @@ export default function Home() {
       <Hero language={language} setLanguage={setLanguage} />
       <Services language={language} />
       <About language={language} />
+      <Founder language={language} />
       <WhyChooseUs language={language} />
       <PortfolioPreview language={language} />
       <InstagramSection language={language} />
@@ -400,11 +401,11 @@ function Inquiry({ language }: { language: Language }) {
           <Mail size={16} aria-hidden="true" />
           {contact.email}
         </a>
-        <a href={contact.phoneHref}>
+        <a href={contact.phoneHref} onClick={() => trackEvent("phone_click")}>
           <Phone size={16} aria-hidden="true" />
           {contact.phone}
         </a>
-        <a href={contact.whatsapp} target="_blank" rel="noreferrer">
+        <a href={contact.whatsapp} target="_blank" rel="noreferrer" onClick={() => trackEvent("whatsapp_click")}>
           <MessageCircle size={16} aria-hidden="true" />
           WhatsApp
         </a>
@@ -507,22 +508,37 @@ function Testimonials({ language }: { language: Language }) {
   return (
     <section className="section testimonials-section">
       <SectionIntro eyebrow={t.testimonialsEyebrow} title={t.testimonialsTitle} />
-      <div className="testimonials-grid">
-        {t.testimonials.map((item) => (
-          <article className="testimonial-card" key={item.name}>
-            <Quote size={22} aria-hidden="true" />
-            <div className="testimonial-stars" aria-label="5 out of 5">
-              {[0, 1, 2, 3, 4].map((star) => (
-                <Star key={star} size={15} aria-hidden="true" fill="currentColor" />
-              ))}
-            </div>
-            <p>{item.quote}</p>
-            <div className="testimonial-author">
-              <strong>{item.name}</strong>
-              <span>{item.event}</span>
-            </div>
-          </article>
-        ))}
+      <div className="testimonials-placeholder">
+        <Quote size={32} aria-hidden="true" />
+        <p>{t.testimonialsPlaceholder}</p>
+        <a className="button secondary" href={siteContent.contact.instagram} target="_blank" rel="noreferrer">
+          <Instagram size={18} aria-hidden="true" />
+          {siteContent.contact.instagramHandle}
+        </a>
+      </div>
+    </section>
+  );
+}
+
+function Founder({ language }: { language: Language }) {
+  const t = translations[language];
+
+  return (
+    <section className="section founder-section alt">
+      <div className="founder-layout">
+        <div className="founder-photo">
+          {/* TODO(client): replace with a real photo of the founder */}
+          <div className="founder-photo-placeholder">
+            <Sparkles size={32} aria-hidden="true" />
+          </div>
+        </div>
+        <div className="founder-copy">
+          <p className="eyebrow">{t.founderEyebrow}</p>
+          <h2>{t.founderTitle}</h2>
+          <div className="gold-divider" aria-hidden="true" />
+          <p>{t.founderText}</p>
+          <p className="founder-name">{t.founderName}</p>
+        </div>
       </div>
     </section>
   );
@@ -567,18 +583,33 @@ function InstagramSection({ language }: { language: Language }) {
 
 function ServiceArea({ language }: { language: Language }) {
   const t = translations[language];
+  const [visible, setVisible] = useState(false);
+  const mapRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = mapRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setVisible(true); observer.disconnect(); } },
+      { rootMargin: "200px" }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <section className="section service-area-section">
       <SectionIntro eyebrow={t.mapEyebrow} title={t.mapTitle} />
-      <div className="service-area-map">
-        <iframe
-          src={siteContent.map.embedUrl}
-          title={t.mapTitle}
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-          allowFullScreen
-        />
+      <div className="service-area-map" ref={mapRef}>
+        {visible ? (
+          <iframe
+            src={siteContent.map.embedUrl}
+            title={t.mapTitle}
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            allowFullScreen
+          />
+        ) : null}
       </div>
     </section>
   );
